@@ -24,6 +24,11 @@ public class Ship {
         return false;
     }
 
+    void killSegment(int[] pos) {
+        segments.removeIf(segment -> segment[0] == pos[0] && segment[1] == pos[1] == true);
+        if (segments.size() < 1) status = Status.SUNK;
+    }
+
     public Status getStatus() {
         return status;
     }
