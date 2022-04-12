@@ -3,7 +3,7 @@ package com.company;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Player {
+public class AIPlayer {
     String name;
     int shipCount;
     ArrayList<Ship> ships = new ArrayList<>();
@@ -11,7 +11,7 @@ public class Player {
     Square[][] selfBoard;
     Square[][] guessBoard;
 
-    Player(String name, int[] ships) {
+    AIPlayer(String name, int[] ships) {
         this.selfBoard = new Square[10][10];
         this.guessBoard = new Square[10][10];
         this.name = name;
@@ -23,7 +23,6 @@ public class Player {
         setupShips(ships);
 
     }
-
 
     Square[][] setupBoard(Square[][] board){
         for (int x = 0; x < board.length; x++) {
@@ -43,17 +42,14 @@ public class Player {
         return board;
     }
 
-    void setupShips(int[] shipSizes){
-        Scanner read = new Scanner(System.in);
+    void setupShips(int[] shipSizes) {
+
         int i = 0;
         while (i < shipCount) {
-            System.out.println("You are about to place a ship with size: " + shipSizes[i] + ", where would you like it?");
-            System.out.print("X: ");
-            int x = read.nextInt();
-            System.out.print("Y: ");
-            int y = read.nextInt();
-            System.out.println("What direction:\n\t1: UP\n\t2: DOWN\n\t3: LEFT\n\t4: RIGHT");
-            int d = read.nextInt();
+            int x = (int) (Math.random() * 10);
+            int y = (int) (Math.random() * 10);
+            int d = (int) (Math.random() * 5);
+
             Direction dir;
             switch (d) {
                 case 1:
@@ -70,13 +66,14 @@ public class Player {
                     break;
             }
 
+            System.out.println("Size " + shipSizes[i] + " : " + x + " : " + y);
+
             if (placeShip(shipSizes[i], new int[]{x, y}, dir)) {
                 i++;
-                printBoard();
             }
         }
-
     }
+
 
     boolean placeShip(int size, int[] origin, Direction direction){
         if (checkShipSpace(size, origin, direction)) {
@@ -156,9 +153,9 @@ public class Player {
         int x, y;
         Scanner read = new Scanner(System.in);
         System.out.println("Guess?");
-        System.out.print("X: ");
+        System.out.println("X: ");
         x = read.nextInt();
-        System.out.print("Y: ");
+        System.out.println("Y: ");
         y = read.nextInt();
         return new int[]{x, y};
     }
@@ -178,10 +175,10 @@ public class Player {
                 if (squares[x].getType().equals(SquareType.WATER)) System.out.print(" -");
                 else if (squares[x].getType().equals(SquareType.SHIP)) System.out.print(" Q");
                 else if (squares[x].getType().equals(SquareType.HIT)) System.out.print(" *");
-                else if (squares[x].getType().equals(SquareType.UNKNOWN)) System.out.print(" ?");
 
             }
             System.out.print("\n");
         }
     }
 }
+
