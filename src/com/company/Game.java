@@ -8,8 +8,9 @@ public class Game {
     int round;
 
     Game(){
-        P1 = new Player("Sam", new int[]{3, 3});
-        P2 = new AIPlayer("Sam", new int[]{3, 3});
+        P1 = new Player("Sam", new int[]{5, 4, 3, 3, 2});
+        P2 = new AIPlayer("RoboSAM", new int[]{5, 4, 3, 3, 2});
+        P2.printBoard();
         round = 0;
         turn();
     }

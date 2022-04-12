@@ -11,6 +11,8 @@ public class AIPlayer {
     Square[][] selfBoard;
     Square[][] guessBoard;
 
+    int[] last;
+
     AIPlayer(String name, int[] ships) {
         this.selfBoard = new Square[10][10];
         this.guessBoard = new Square[10][10];
@@ -19,6 +21,7 @@ public class AIPlayer {
         selfBoard = setupBoard(selfBoard);
         guessBoard = setupGuessBoard(guessBoard);
 
+        last = new int[]{-1, -1};
         setupShips(ships);
 
     }
@@ -67,6 +70,9 @@ public class AIPlayer {
 
             if (placeShip(shipSizes[i], new int[]{x, y}, dir)) {
                 i++;
+            } else {
+                i = 0;
+                setupBoard(selfBoard);
             }
         }
     }
@@ -139,13 +145,14 @@ public class AIPlayer {
                 if (ship.hasSegment(guess)) {
                     ship.killSegment(guess);
                     if (ship.getStatus().equals(Status.SUNK)){
-                        System.out.println("A ship has been sunk");
+                        System.out.println("\nAn enemy ship has been sunk\n");
                     }
                 }
             }
         }
     }
 
+    //TODO: make high IQ
     int[] guess(){
         int x, y;
         x = (int) (Math.random() * 10);

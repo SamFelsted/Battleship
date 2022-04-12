@@ -73,6 +73,9 @@ public class Player {
             if (placeShip(shipSizes[i], new int[]{x, y}, dir)) {
                 i++;
                 printBoard();
+            } else {
+                i = 0;
+                setupBoard(selfBoard);
             }
         }
 
