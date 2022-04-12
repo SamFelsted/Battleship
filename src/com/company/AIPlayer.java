@@ -18,7 +18,6 @@ public class AIPlayer {
         this.shipCount = ships.length;
         selfBoard = setupBoard(selfBoard);
         guessBoard = setupGuessBoard(guessBoard);
-        printBoard();
 
         setupShips(ships);
 
@@ -65,8 +64,6 @@ public class AIPlayer {
                     dir = Direction.DOWN;
                     break;
             }
-
-            System.out.println("Size " + shipSizes[i] + " : " + x + " : " + y);
 
             if (placeShip(shipSizes[i], new int[]{x, y}, dir)) {
                 i++;
@@ -151,12 +148,8 @@ public class AIPlayer {
 
     int[] guess(){
         int x, y;
-        Scanner read = new Scanner(System.in);
-        System.out.println("Guess?");
-        System.out.println("X: ");
-        x = read.nextInt();
-        System.out.println("Y: ");
-        y = read.nextInt();
+        x = (int) (Math.random() * 10);
+        y = (int) (Math.random() * 10);
         return new int[]{x, y};
     }
 
@@ -175,6 +168,7 @@ public class AIPlayer {
                 if (squares[x].getType().equals(SquareType.WATER)) System.out.print(" -");
                 else if (squares[x].getType().equals(SquareType.SHIP)) System.out.print(" Q");
                 else if (squares[x].getType().equals(SquareType.HIT)) System.out.print(" *");
+                else if  (squares[x].getType().equals(SquareType.UNKNOWN)) System.out.print(" ?");
 
             }
             System.out.print("\n");
