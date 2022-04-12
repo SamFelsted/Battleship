@@ -19,7 +19,7 @@ public class Player {
         printBoard();
 
         setupShips(ships);
-        printBoard();
+
     }
 
     void setupBoard(Square[][] board){
@@ -68,6 +68,7 @@ public class Player {
 
             if (placeShip(shipSizes[i], new int[]{x, y}, dir)) {
                 i++;
+                printBoard();
             }
         }
 
@@ -76,7 +77,31 @@ public class Player {
     boolean placeShip(int size, int[] origin, Direction direction){
         if (checkShipSpace(size, origin, direction)) {
 
+            if (direction.equals(Direction.UP)) {
+                for (int i = 0; i < size; i++) {
+                    if (selfBoard[origin[0]][origin[1] - i].getType().equals(SquareType.SHIP)) return false;
+                    else selfBoard[origin[0]][origin[1] - i].setType(SquareType.SHIP);
+                }
+            }
+            else if (direction.equals(Direction.DOWN)) {
+                for (int i = 0; i < size; i++) {
+                    if (selfBoard[origin[0]][origin[1] + i].getType().equals(SquareType.SHIP)) return false;
+                    else selfBoard[origin[0]][origin[1] + i].setType(SquareType.SHIP);
+                }
+            }
+            else if (direction.equals(Direction.LEFT)) {
+                for (int i = 0; i < size; i++) {
+                    if (selfBoard[origin[0] + i][origin[1]].getType().equals(SquareType.SHIP)) return false;
+                    else selfBoard[origin[0] + i][origin[1]].setType(SquareType.SHIP);
+                }
+            }
 
+            else if (direction.equals(Direction.RIGHT)) {
+                for (int i = 0; i < size; i++) {
+                    if (selfBoard[origin[0] - i][origin[1]].getType().equals(SquareType.SHIP)) return false;
+                    else selfBoard[origin[0] - i][origin[1]].setType(SquareType.SHIP);
+                }
+            }
 
             Ship ship = new Ship(size, origin, direction);
             ships.add(ship);
@@ -138,10 +163,10 @@ public class Player {
         System.out.print("  0 1 2 3 4 5 6 7 8 9\n");
         for (int x = 0; x < board.length; x++) {
             System.out.print(x);
-            for (int y = 0; y < board.length; y++){
-                if (board[x][y].getType().equals(SquareType.WATER)) System.out.print(" -");
-                else if (board[x][y].getType().equals(SquareType.SHIP)) System.out.print(" =");
-                else if (board[x][y].getType().equals(SquareType.HIT)) System.out.print(" *");
+            for (Square[] squares : board) {
+                if (squares[x].getType().equals(SquareType.WATER)) System.out.print(" -");
+                else if (squares[x].getType().equals(SquareType.SHIP)) System.out.print(" Q");
+                else if (squares[x].getType().equals(SquareType.HIT)) System.out.print(" *");
 
             }
             System.out.print("\n");
